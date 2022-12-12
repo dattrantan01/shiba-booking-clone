@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  
+  body {
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover{
+    background: #1A303D; 
+    border-radius: 10px;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #E7ECF3; 
+    border-radius: 10px;
+  }
+
+}
+
+
+.date_picker_wrapper {
+  width: 240px;
+  border: 1px solid #dddee6;
+  border-radius: 5px;
+  display: flex;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.date_picker_wrapper input:hover,
+.date_picker_wrapper:hover {
+  background-color: #dae0e6;
+}
+
+.date_picker_wrapper span {
+  margin-right: 5px;
+  margin-top: 2px;
+}
+
+.date_picker_wrapper input {
+
+  width: 200px;
+  padding: 10px 10px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
