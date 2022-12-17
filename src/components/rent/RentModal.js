@@ -10,8 +10,12 @@ import {
   MdFormatListBulleted,
   MdOutlineCheckCircleOutline,
 } from "react-icons/md";
+import { IoMdPricetag } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import http from "../../config/axiosConfig";
+import { useState } from "react";
+import Button from "../button/Button";
 
 const RentModal = ({
   handleClose,
@@ -21,6 +25,8 @@ const RentModal = ({
   monthRent,
   utilities,
 }) => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   if (typeof document === "undefined") return <div className="Modal"></div>;
   const utilitiesClient = [];
   utilities.forEach((utility) => {
@@ -31,6 +37,7 @@ const RentModal = ({
     .toISOString()
     .slice(0, 10);
   const handleRent = () => {
+    setIsLoading(true);
     const booking = {
       roomId: roomDetail.id,
       startDay: startDate.toISOString(),
@@ -43,9 +50,12 @@ const RentModal = ({
       .then((res) => {
         console.log("booking", res);
         toast.success("Booking success");
+        setIsLoading(false);
+        navigate("/booking/1");
       })
       .catch((e) => {
         console.log(e);
+        setIsLoading(false);
         toast.error(e.data.message);
       });
   };
@@ -112,20 +122,20 @@ const RentModal = ({
               {utilitiesClient.map((item) => {
                 return (
                   <div className="flex flex-row gap-2 items-center">
-                    <MdOutlineCheckCircleOutline />
-                    {`${item.price} ${item.name}`}
+                    <IoMdPricetag />
+                    <span>{item.name}:</span>
+                    <span>{item.price}</span>
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
-        <button
-          onClick={handleRent}
-          className="outline-none px-4 py-2 text-white bg-primary rounded-lg max-w-[200px] mt-auto mx-auto"
-        >
-          Rent Now
-        </button>
+        <div className="w-full mt-auto flex items-center justify-center">
+          <Button onClick={handleRent} isLoading={isLoading}>
+            Rent Now
+          </Button>
+        </div>
       </div>
     </div>,
     document.querySelector("body")

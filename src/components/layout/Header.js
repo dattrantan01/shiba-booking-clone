@@ -11,8 +11,8 @@ const items = [
     name: "Location",
   },
   {
-    url: "/profile",
-    name: "Profile",
+    url: "/booking",
+    name: "Booking",
   },
 ];
 

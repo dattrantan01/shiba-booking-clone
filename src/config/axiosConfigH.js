@@ -1,12 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-class Http {
+class HttpH {
   constructor() {
     this.instance = axios.create({
-      // baseURL: "http://192.168.10.28:8080/api/",
-      baseURL: "https://pbl6-prod-pbl-dspnq9.mo6.mogenius.io/api/booking/",
-      // baseURL: "https://shibabooking.herokuapp.com/api/booking/",
+      baseURL: "http://192.168.10.28:3000/api/v1",
       timeout: 20000,
       headers: {
         "Content-Type": "application/json",
@@ -58,5 +56,5 @@ class Http {
   }
 }
 
-const http = new Http();
+const http = new HttpH();
 export default http;

@@ -19,7 +19,7 @@ const Search = ({ handleSearch, col = false }) => {
   const [wardsName, setWardsName] = useState("");
   const { setSearch, search } = useSearch();
 
-  const { handleSubmit, setValue } = useForm({
+  const { handleSubmit, setValue, register } = useForm({
     mode: "onSubmit",
   });
   const fetchDistrict = async (cityId) => {
@@ -99,12 +99,14 @@ const Search = ({ handleSearch, col = false }) => {
     setCityName("");
     setDistrictName("");
     setWardsName("");
+    setValue("minPrice", "");
+    setValue("maxPrice", "");
   };
   return (
     <form
       onSubmit={handleSubmit(handleSearch)}
       className={`grid gap-3 ${
-        col ? "grid-rows-1 w-[250px]" : "grid-cols-4 w-full"
+        col ? "grid-rows-1 w-full" : "grid-cols-4 w-full"
       } `}
     >
       <Field>
@@ -149,6 +151,27 @@ const Search = ({ handleSearch, col = false }) => {
           </List>
         </Dropdown>
       </Field>
+      {col && (
+        <div className="w-full">
+          <Label>Price</Label>
+          <div className="flex flex-row gap-5 mt-3">
+            <input
+              type="number"
+              placeholder="min"
+              name="minPrice"
+              className="w-full py-2 px-3 rounded-md outline-none order bg-grayLight focus:border-primary bg-slate-100"
+              {...register("minPrice", { required: true })}
+            ></input>
+            <input
+              type="number"
+              placeholder="max"
+              name="maxPrice"
+              className="w-full py-2 px-3 rounded-md outline-none order bg-grayLight focus:border-primary bg-slate-100"
+              {...register("maxPrice", { required: true })}
+            ></input>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col gap-3">
         <div className="flex flex-row gap-1 font-semibold items-center">
           <MdLocationPin />

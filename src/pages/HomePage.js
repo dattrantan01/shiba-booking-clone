@@ -13,7 +13,7 @@ const HomePage = () => {
     navigate(`location`);
   };
   return (
-    <section className="mt-6 relative">
+    <section className=" w-full max-w-[1250px] mx-auto mt-6 relative">
       <div className="w-full h-[500px] relative rounded-3xl overflow-auto">
         <img
           src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1175&q=80"
