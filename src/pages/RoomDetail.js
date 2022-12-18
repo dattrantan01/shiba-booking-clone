@@ -17,7 +17,7 @@ const RoomDetail = () => {
   useEffect(() => {
     setIsLoading(true);
     http
-      .get(`rooms/${id}/detail`)
+      .get(`booking/rooms/${id}/detail`)
       .then((res) => {
         setIsLoading(false);
         setRoomDetail(res.data);
@@ -28,7 +28,7 @@ const RoomDetail = () => {
       });
 
     http
-      .get(`rooms/${id}/reviews`)
+      .get(`booking/rooms/${id}/reviews`)
       .then((res) => {
         setReviews(res.data);
         setIsLoading(false);

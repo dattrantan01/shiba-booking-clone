@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import http from "../config/axiosConfig";
-
+import Button from "../components/button/Button";
 import { toast } from "react-toastify";
 import Field from "../components/field/Field";
 import Label from "../components/label/Label";
@@ -42,25 +42,29 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const [checkMail, setCheckMail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const onSubmit = (e) => {
     console.log(e);
     login(e);
   };
 
   function login(value) {
+    setIsLoading(true);
     http
-      .post("users/client/login", value)
+      .post("v1/users/client/login", value)
       .then((res) => {
         console.log("login success: ", res);
         localStorage.setItem("token", res.data.token);
       })
       .then(() => {
-        http.get("/me").then((resUser) => {
+        http.get("v1/me").then((resUser) => {
           setUser(resUser.data);
+          setIsLoading(false);
           navigate("/");
         });
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log("error: ", err);
       });
   }
@@ -71,7 +75,7 @@ const LoginPage = () => {
     }
     setCheckMail(true);
     http
-      .post(`/reset-password`, {
+      .post(`v1/reset-password`, {
         email: getValues("email"),
       })
       .then((res) => {
@@ -91,7 +95,13 @@ const LoginPage = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="w-[50%] h-[100%] flex flex-col px-8 justify-center">
+          <div className="w-[50%] h-[100%] flex flex-col px-8 justify-center relative">
+            <div
+              className="absolute top-5 right-5 text-sm font-semibold cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              Back to homepage
+            </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Field>
                 <Label name="username">Email</Label>
@@ -122,12 +132,9 @@ const LoginPage = () => {
                 )}
               </Field>
               <div className="w-full flex justify-center pb-6">
-                <button
-                  className="px-5 py-2 rounded-xl bg-primary text-white"
-                  type="submit"
-                >
+                <Button type="submit" isLoading={isLoading}>
                   Sign In
-                </button>
+                </Button>
               </div>
             </form>
             <div className="text-sm flex justify-center text-gray">

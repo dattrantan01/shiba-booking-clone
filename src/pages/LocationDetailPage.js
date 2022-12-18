@@ -17,7 +17,7 @@ const LocationDetailPage = () => {
   const getDetailRoom = async () => {
     setIsLoading(true);
     http
-      .get(`locations/${id}`)
+      .get(`booking/locations/${id}`)
       .then((res) => {
         console.log(res.data);
         setLocationDetail(res.data);
@@ -30,10 +30,10 @@ const LocationDetailPage = () => {
   const getListRoom = async () => {
     setIsLoading(true);
     http
-      .post(`locations/${id}/rooms/all`, {})
+      .post(`booking/locations/${id}/rooms/all`, {})
       .then((res) => {
         console.log(res.data);
-        setRooms(res.data);
+        setRooms(res.data.response);
         setIsLoading(false);
       })
       .catch((err) => {

@@ -3,17 +3,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import RentBooking from "../components/rent/RentBooking";
 import http from "../config/axiosConfig";
 import Loading from "../components/loading/Loading";
+import { toast } from "react-toastify";
 
 const BookingManagePage = () => {
   const params = useParams();
   const status = params.status;
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
     http
-      .get(`bookings/current-user?status=${status}`)
+      .get(`booking/bookings/current-user?status=${status}`)
       .then((res) => {
         console.log(res);
         setBookings(res.data);
@@ -26,7 +28,7 @@ const BookingManagePage = () => {
   }, [status]);
   const handlePayment = (id) => {
     http
-      .post(`payment`, {
+      .post(`booking/payment`, {
         bookingId: id,
         orderDesc: "string",
         language: 1,
@@ -48,14 +50,14 @@ const BookingManagePage = () => {
         shippingBillType: 1,
       })
       .then((res) => {
-        window.location.replace(res.data);
+        window.location.replace(res.data.response);
         console.log(res);
       })
       .catch((err) => {});
   };
   const handleDuePayment = (id) => {
     http
-      .post(`payment`, {
+      .post(`booking/payment`, {
         bookingId: id,
         orderDesc: "string",
         language: 1,
@@ -82,6 +84,54 @@ const BookingManagePage = () => {
       })
       .catch((err) => {});
   };
+  const handleExtendDue = (id, months) => {
+    http
+      .put(`booking/bookings/${id}/extend`, {
+        monthNumber: months,
+      })
+      .then((res) => {
+        http
+          .post(`booking/payment`, {
+            bookingId: id,
+            orderDesc: "string",
+            language: 1,
+            bank: 8,
+            orderCategory: 4,
+            billingMobile: "string",
+            billingEmail: "string",
+            billingFirstName: "string",
+            billingLastName: "string",
+            billingAddress: "string",
+            billingCity: "string",
+            billingCountry: "string",
+            shippingMobile: "string",
+            shippingEmail: "string",
+            shippingCustomer: "string",
+            shippingAddress: "string",
+            shippingCompany: "string",
+            shippingTaxCode: "string",
+            shippingBillType: 1,
+          })
+          .then((res) => {
+            window.location.replace(res.data);
+            console.log(res);
+          })
+          .catch((err) => {
+            toast.error(err);
+          });
+      });
+  };
+  const handleDoneExtendDue = (id) => {
+    http
+      .put(`booking/bookings/${id}/done`)
+      .then((res) => {
+        toast.success(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <div className="px-5 pt-5 w-full">
       {isLoading ? (
@@ -102,7 +152,11 @@ const BookingManagePage = () => {
                 utilities={item.utilities}
                 handlePayment={handlePayment}
                 handleDuePayment={handleDuePayment}
+                handleExtendDue={handleExtendDue}
+                handleDoneExtendDue={handleDoneExtendDue}
                 imgUrl={item.imgUrl}
+                isLoadingButton={isLoadingButton}
+                overDueDay={item.overDueDay}
               ></RentBooking>
             );
           })}

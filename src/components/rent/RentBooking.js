@@ -1,5 +1,5 @@
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 
 import { FiClipboard } from "react-icons/fi";
 import {
@@ -10,7 +10,8 @@ import {
   MdOutlineCheckCircleOutline,
 } from "react-icons/md";
 import { IoMdPricetag } from "react-icons/io";
-import http from "../../config/axiosConfig";
+import ExtendPayment from "./ExtendPayment";
+import Button from "../button/Button";
 const RentBooking = ({
   roomName,
   userName,
@@ -21,8 +22,13 @@ const RentBooking = ({
   id,
   handlePayment,
   handleDuePayment,
+  handleExtendDue,
+  handleDoneExtendDue,
   imgUrl,
+  isLoadingButton,
+  overDueDay,
 }) => {
+  const [showExtend, setShowExtend] = useState(false);
   const endDate = moment(startDate)
     .add(monthRent, "months")
     .toISOString()
@@ -30,6 +36,11 @@ const RentBooking = ({
   return (
     <div className="relative z-10 rounded-lg w-full bg-slate-100 px-5 py-5 flex flex-col">
       <h2 className="font-bold text-3xl text-center text-primary">#{id}</h2>
+      {status === "DuePayment" && (
+        <div className="font-semibold text-red-500 absolute top-5 right-5">
+          {overDueDay} days left
+        </div>
+      )}
       <div className="mt-5 text-lg">
         <div className="w-full flex flex-row gap-3">
           <div className="w-[150px] h-[150px]">
@@ -113,22 +124,27 @@ const RentBooking = ({
         </div>
         {status === "Approved" && (
           <div className="w-full mt-5 mx-auto max-w-[200px] ">
-            <button
-              onClick={() => handlePayment(id)}
-              className="outline-none px-5 py-3 text-white bg-primary rounded-lg "
-            >
-              Payment
-            </button>
+            <Button onClick={() => handlePayment(id)}>Payment</Button>
           </div>
         )}
         {status === "DuePayment" && (
           <div className="w-full mt-5 mx-auto max-w-[200px] ">
-            <button
-              onClick={() => handleDuePayment(id)}
-              className="outline-none px-5 py-3 text-white bg-primary rounded-lg "
-            >
-              Due Payment
-            </button>
+            <Button onClick={() => handleDuePayment(id)}>Due Payment</Button>
+          </div>
+        )}
+        {status === "ExtendDue" && (
+          <div className="w-full mt-5 mx-auto max-w-[300px] ">
+            <Button onClick={() => setShowExtend(true)}>
+              ExtendDue Payment
+            </Button>
+            <Button onClick={() => handleDoneExtendDue(id)}>Done</Button>
+            {showExtend && (
+              <ExtendPayment
+                id={id}
+                handleExtendDue={handleExtendDue}
+                handleClose={() => setShowExtend(false)}
+              ></ExtendPayment>
+            )}
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Field from "../components/field/Field";
 import Input from "../components/input/Input";
@@ -11,10 +11,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import httpH from "../config/axiosConfigH";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/auth-context";
+import http from "../config/axiosConfig";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const schema = yup.object({
     firstName: yup.string().required("Please enter your first name"),
     lastName: yup.string().required("Please enter your last name"),
@@ -56,6 +58,7 @@ const RegisterPage = () => {
   });
   const watchGender = watch("gender");
   const handeAddUser = (values) => {
+    setIsLoading(true);
     const user = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -68,20 +71,24 @@ const RegisterPage = () => {
         "https://images.unsplash.com/photo-1667506057200-e55b56ee2b44?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
     };
     console.log("user", user);
-    httpH
-      .post("/client/sign-up", user)
+    http
+      .post("v1/client/sign-up", user)
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data.token);
       })
       .then(() => {
         console.log(localStorage.getItem("token"));
-        httpH.get("/me").then((resUser) => {
+        http.get("v1/me").then((resUser) => {
+          setIsLoading(false);
           setUser(resUser.data);
           navigate("/");
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   };
   useEffect(() => {
     const errorsList = Object.values(errors);
@@ -205,7 +212,9 @@ const RegisterPage = () => {
             </div>
           </Field>
           <div className="w-full flex justify-center gap-10 mb-4">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Submit
+            </Button>
           </div>
           <div className="text-sm justify-center flex text-grayCustom">
             <span className="inline-block mr-1">Already have an account? </span>

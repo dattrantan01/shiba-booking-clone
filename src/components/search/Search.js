@@ -23,15 +23,15 @@ const Search = ({ handleSearch, col = false }) => {
     mode: "onSubmit",
   });
   const fetchDistrict = async (cityId) => {
-    const res = await http.get(`locations/cities/${cityId}`);
+    const res = await http.get(`booking/locations/cities/${cityId}`);
     setDistricts(res?.data);
   };
   const fetchWard = async (districtId) => {
-    const res = await http.get(`locations/districts/${districtId}`);
+    const res = await http.get(`booking/locations/districts/${districtId}`);
     setWards(res?.data);
   };
   useEffect(() => {
-    http.get(`locations/cities`).then((res) => {
+    http.get(`booking/locations/cities`).then((res) => {
       setCites(res?.data);
     });
   }, []);

@@ -18,7 +18,7 @@ const LocationPage = () => {
     const ward = search.wardId;
     http
       .get(
-        `locations/all?cityId=${city || ""}&districtId=${
+        `booking/locations/all?cityId=${city || ""}&districtId=${
           district || ""
         }&wardsId=${ward || ""}`
       )
@@ -39,7 +39,7 @@ const LocationPage = () => {
     const ward = search.wardId;
     http
       .get(
-        `locations/all?cityId=${city || ""}&districtId=${
+        `booking/locations/all?cityId=${city || ""}&districtId=${
           district || ""
         }&wardsId=${ward || ""}&minPrice=${values.minPrice}&maxPrice=${
           values.maxPrice

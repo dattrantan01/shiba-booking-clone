@@ -13,7 +13,7 @@ const PaymentSuccess = () => {
   }
   useEffect(() => {
     const queryUrl = query.join("&");
-    http.get(`payment/return?${queryUrl}`).then((res) => {
+    http.get(`booking/payment/return?${queryUrl}`).then((res) => {
       console.log(res);
     });
   }, []);

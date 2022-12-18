@@ -17,7 +17,7 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
   const [showModalRent, setShowModalRent] = useState(false);
   useEffect(() => {
     http
-      .get(`locations/${locationId}/utilities`)
+      .get(`booking/locations/${locationId}/utilities`)
       .then((res) => {
         console.log("utilities", res.data);
         let listUti = res.data;
@@ -32,7 +32,7 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
       .catch((err) => {
         console.log("utilities: ", err);
       });
-    http.get(`locations/${locationId}`).then((res) => {
+    http.get(`booking/locations/${locationId}`).then((res) => {
       setLocation(res.data);
     });
   }, [locationId]);

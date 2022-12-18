@@ -46,7 +46,7 @@ const RentModal = ({
     };
     console.log(booking);
     http
-      .post(`bookings`, booking)
+      .post(`booking/bookings`, booking)
       .then((res) => {
         console.log("booking", res);
         toast.success("Booking success");

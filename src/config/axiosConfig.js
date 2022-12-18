@@ -5,7 +5,8 @@ class Http {
   constructor() {
     this.instance = axios.create({
       // baseURL: "http://192.168.10.28:8080/api/",
-      baseURL: "https://pbl6-prod-pbl-dspnq9.mo6.mogenius.io/api/booking/",
+      // baseURL: "https://pbl6-prod-pbl-dspnq9.mo6.mogenius.io/api/booking/",
+      baseURL: "https://gateway-prod-gateway-0ix8cn.mo4.mogenius.io/api/",
       // baseURL: "https://shibabooking.herokuapp.com/api/booking/",
       timeout: 20000,
       headers: {
