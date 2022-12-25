@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 
 const booking = [
   {
@@ -40,6 +40,14 @@ const booking = [
 ];
 
 const BookingLayout = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+    return;
+  });
   return (
     <div className="w-full flex flex-col max-w-[1250px] mx-auto">
       <div className="w-full flex flex-col h-fit shadow-lg rounded-lg mt-24 pt-5">

@@ -13,7 +13,7 @@ const ListRoomSwiper = () => {
   console.log("listRoom", listRoom);
   return (
     <div className="movie-list">
-      <Swiper spaceBetween={20} slidesPerView={4.2}>
+      <Swiper spaceBetween={20} slidesPerView={3.5}>
         {listRoom.length > 0 &&
           listRoom.map((room, index) => {
             const availableDate = room.availableDay?.slice(0, 10);

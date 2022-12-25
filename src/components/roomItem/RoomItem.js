@@ -33,7 +33,7 @@ const RoomItem = ({
         </p>
         <div className="flex w-full justify-between text-primary mt-auto">
           <span className="text-2xl">
-            {price}$<sub className="text-xs">/Month</sub>
+            {price} VND<sub className="text-xs">/Month</sub>
           </span>
           <button
             className="px-3 py-1 rounded-full text-white shadow-xl bg-primary"

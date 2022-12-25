@@ -65,6 +65,7 @@ const LoginPage = () => {
       })
       .catch((err) => {
         setIsLoading(false);
+        toast.error(err.data.message);
         console.log("error: ", err);
       });
   }

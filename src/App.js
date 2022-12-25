@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "../src/pages/HomePage";
 import BookingLayout from "./components/layout/BookingLayout";
 import Layout from "./components/layout/Layout";
@@ -14,6 +14,9 @@ import RegisterPage from "./pages/RegisterPage.js";
 import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
+  const requireAuth = () => {
+    console.log("check auth");
+  };
   return (
     <AuthProvider>
       <SearchProvider>
@@ -29,7 +32,11 @@ function App() {
               path="/location-detail/:locationId/rooms/:id"
               element={<RoomDetail />}
             ></Route>
-            <Route path="/booking" element={<BookingLayout />}>
+            <Route
+              path="/booking"
+              element={<BookingLayout />}
+              onEnter={requireAuth}
+            >
               <Route
                 path="/booking/:status"
                 element={<BookingManagePage />}

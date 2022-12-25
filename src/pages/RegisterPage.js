@@ -87,6 +87,7 @@ const RegisterPage = () => {
       })
       .catch((err) => {
         setIsLoading(false);
+        toast.error(err?.data?.message);
         console.log(err);
       });
   };

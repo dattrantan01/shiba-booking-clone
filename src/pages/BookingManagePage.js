@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import RentBooking from "../components/rent/RentBooking";
 import http from "../config/axiosConfig";
 import Loading from "../components/loading/Loading";
@@ -12,7 +12,8 @@ const BookingManagePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
+
+  const getBookings = () => {
     setIsLoading(true);
     http
       .get(`booking/bookings/current-user?status=${status}`)
@@ -25,7 +26,11 @@ const BookingManagePage = () => {
         console.log(err);
         setIsLoading(false);
       });
+  };
+  useEffect(() => {
+    getBookings();
   }, [status]);
+
   const handlePayment = (id) => {
     http
       .post(`booking/payment`, {
@@ -131,7 +136,15 @@ const BookingManagePage = () => {
         console.error(err);
       });
   };
-
+  const handleDonePendingBooking = (id) => {
+    http
+      .put(`booking/bookings/${id}/reject`)
+      .then((res) => {
+        toast.success("success");
+        getBookings();
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="px-5 pt-5 w-full">
       {isLoading ? (
@@ -156,6 +169,7 @@ const BookingManagePage = () => {
                 handleDoneExtendDue={handleDoneExtendDue}
                 imgUrl={item.imgUrl}
                 isLoadingButton={isLoadingButton}
+                handleDonePendingBooking={handleDonePendingBooking}
                 overDueDay={item.overDueDay}
               ></RentBooking>
             );

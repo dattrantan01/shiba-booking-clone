@@ -123,7 +123,7 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
                 <CheckBoxItem
                   key={item.value.id}
                   value={item.value}
-                  title={`${item.value.price} ${item.value.name}`}
+                  title={`${item.value.name}: ${item.value.price} VND`}
                   onChange={() => handleClickUtility(item)}
                   checked={item.checked}
                 />

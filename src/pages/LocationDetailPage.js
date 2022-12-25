@@ -85,8 +85,8 @@ const LocationDetailPage = () => {
                     locationDetail?.utilityResponses.map((item) => (
                       <div className="flex flex-row gap-2 items-center">
                         <IoMdPricetag />
-                        <span>{item.name}:</span>
-                        <span>{item.price}</span>
+                        <span className="font-medium">{item.name}:</span>
+                        <span>{item.price} VND</span>
                       </div>
                     ))}
                 </div>

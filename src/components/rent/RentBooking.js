@@ -27,6 +27,7 @@ const RentBooking = ({
   imgUrl,
   isLoadingButton,
   overDueDay,
+  handleDonePendingBooking,
 }) => {
   const [showExtend, setShowExtend] = useState(false);
   const endDate = moment(startDate)
@@ -122,6 +123,11 @@ const RentBooking = ({
             </div>
           </div>
         </div>
+        {status === "Pending" && (
+          <div className="w-full mt-5 mx-auto max-w-[200px] ">
+            <Button onClick={() => handleDonePendingBooking(id)}>Done</Button>
+          </div>
+        )}
         {status === "Approved" && (
           <div className="w-full mt-5 mx-auto max-w-[200px] ">
             <Button onClick={() => handlePayment(id)}>Payment</Button>
@@ -133,9 +139,12 @@ const RentBooking = ({
           </div>
         )}
         {status === "ExtendDue" && (
-          <div className="w-full mt-5 mx-auto max-w-[300px] ">
-            <Button onClick={() => setShowExtend(true)}>
-              ExtendDue Payment
+          <div className="w-full mt-5 mx-auto max-w-[300px] flex flex-row gap-3">
+            <Button
+              onClick={() => setShowExtend(true)}
+              styleClass="bg-orange-400"
+            >
+              Extend
             </Button>
             <Button onClick={() => handleDoneExtendDue(id)}>Done</Button>
             {showExtend && (
