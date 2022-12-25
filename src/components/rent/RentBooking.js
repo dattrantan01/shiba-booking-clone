@@ -115,7 +115,7 @@ const RentBooking = ({
                     <div className="flex flex-row gap-1 items-center">
                       <IoMdPricetag />
                       <span>{item.name}:</span>
-                      <span>{item.price}</span>
+                      <span>{item.price} VND</span>
                     </div>
                   );
                 })}

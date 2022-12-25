@@ -83,7 +83,10 @@ const LocationDetailPage = () => {
                 <div className="flex flex-row gap-3 mt-3">
                   {locationDetail &&
                     locationDetail?.utilityResponses.map((item) => (
-                      <div className="flex flex-row gap-2 items-center">
+                      <div
+                        key={item.id}
+                        className="flex flex-row gap-2 items-center"
+                      >
                         <IoMdPricetag />
                         <span className="font-medium">{item.name}:</span>
                         <span>{item.price} VND</span>

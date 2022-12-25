@@ -14,19 +14,23 @@ import moment from "moment";
 import Button from "../button/Button";
 import { useNavigate } from "react-router-dom";
 import { status } from "../../utils/status";
+import Loading from "../loading/Loading";
 
 const RentBookingModal = ({ handleClose, bookingId }) => {
   const [bookingDetail, setBookingDetail] = useState();
+  const [isLoading, setIsLoading] = useState();
   const navigate = useNavigate();
   useEffect(() => {
+    setIsLoading(true);
     http
       .get(`booking/bookings/${bookingId}`)
       .then((res) => {
-        console.log(res.data);
+        setIsLoading(false);
         setBookingDetail(res.data);
       })
       .catch((err) => {
         console.error(err);
+        setIsLoading(false);
       });
   }, [bookingId]);
   const endDate = moment(bookingDetail?.startDay)
@@ -50,96 +54,103 @@ const RentBookingModal = ({ handleClose, bookingId }) => {
         <AiOutlineCloseCircle className="w-full h-full" />
       </div>
       <div className="relative z-10 rounded-lg w-full max-w-[500px] h-[650px] overflow-y-auto bg-slate-100 px-5 py-5 flex flex-col">
-        <h2 className="font-bold text-3xl text-center text-primary">
-          #{bookingId}
-        </h2>
-        <div className="w-full flex flex-col gap-3">
-          <div className="w-[250px] h-[250px] mx-auto">
-            <img
-              src={bookingDetail?.imgUrl}
-              alt=""
-              className="object-contain w-full h-full"
-            />
-          </div>
-          <div className="w-full">
-            <div className="w-full grid grid-cols-2">
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <MdMeetingRoom />
-                  <span className="font-semibold">Room name:</span>
-                  <span>{bookingDetail?.roomName}</span>
-                </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            {" "}
+            <h2 className="font-bold text-3xl text-center text-primary">
+              #{bookingId}
+            </h2>
+            <div className="w-full flex flex-col gap-3">
+              <div className="w-[250px] h-[250px] mx-auto">
+                <img
+                  src={bookingDetail?.imgUrl}
+                  alt=""
+                  className="object-contain w-full h-full"
+                />
               </div>
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <MdPeople />
-                  <span className="font-semibold">User:</span>
-                  <span>{bookingDetail?.userName}</span>
+              <div className="w-full">
+                <div className="w-full grid grid-cols-2">
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <MdMeetingRoom />
+                      <span className="font-semibold">Room name:</span>
+                      <span>{bookingDetail?.roomName}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <MdPeople />
+                      <span className="font-semibold">User:</span>
+                      <span>{bookingDetail?.userName}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <MdCalendarToday />
+                      <span className="font-semibold">Month Rent:</span>
+                      <span>{bookingDetail?.monthNumber}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <MdCalendarToday />
+                      <span className="font-semibold">Start Date:</span>
+                      <span>{bookingDetail?.startDay.slice(0, 10)}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <FiClipboard />
+                      <span className="font-semibold">Status:</span>
+                      <div
+                        className={`${
+                          bookingDetail?.status === "Approved"
+                            ? "bg-green-400"
+                            : bookingDetail?.status === "Pending"
+                            ? "bg-yellow-400"
+                            : bookingDetail?.status === "Reject"
+                            ? "bg-red-400"
+                            : "bg-purple-400"
+                        } text-white font-semibold px-2 py-1 rounded-full`}
+                      >
+                        {bookingDetail?.status}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-row gap-2 items-center">
+                      <MdCalendarToday />
+                      <span className="font-semibold">End Date:</span>
+                      <span>{endDate}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <MdCalendarToday />
-                  <span className="font-semibold">Month Rent:</span>
-                  <span>{bookingDetail?.monthNumber}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <MdCalendarToday />
-                  <span className="font-semibold">Start Date:</span>
-                  <span>{bookingDetail?.startDay.slice(0, 10)}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <FiClipboard />
-                  <span className="font-semibold">Status:</span>
-                  <div
-                    className={`${
-                      bookingDetail?.status === "Approved"
-                        ? "bg-green-400"
-                        : bookingDetail?.status === "Pending"
-                        ? "bg-yellow-400"
-                        : bookingDetail?.status === "Reject"
-                        ? "bg-red-400"
-                        : "bg-purple-400"
-                    } text-white font-semibold px-2 py-1 rounded-full`}
-                  >
-                    {bookingDetail?.status}
+                <div className="mt-5">
+                  <div className="flex flex-row gap-2 items-center">
+                    <MdFormatListBulleted />
+                    <span className="font-semibold">Utilities:</span>
+                  </div>
+                  <div className="mt-3 ml-5 flex flex-col gap-2 text-base">
+                    {bookingDetail?.utilities.map((item) => {
+                      return (
+                        <div className="flex flex-row gap-1 items-center">
+                          <IoMdPricetag />
+                          <span>{item.name}:</span>
+                          <span>{item.price} VND</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="flex flex-row gap-2 items-center">
-                  <MdCalendarToday />
-                  <span className="font-semibold">End Date:</span>
-                  <span>{endDate}</span>
-                </div>
-              </div>
             </div>
-            <div className="mt-5">
-              <div className="flex flex-row gap-2 items-center">
-                <MdFormatListBulleted />
-                <span className="font-semibold">Utilities:</span>
-              </div>
-              <div className="mt-3 ml-5 flex flex-col gap-2 text-base">
-                {bookingDetail?.utilities.map((item) => {
-                  return (
-                    <div className="flex flex-row gap-1 items-center">
-                      <IoMdPricetag />
-                      <span>{item.name}:</span>
-                      <span>{item.price} VND</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-auto mx-auto">
-          <Button onClick={handleClick}>Check It</Button>
-        </div>
+            <div className="mt-auto mx-auto">
+              <Button onClick={handleClick}>Check It</Button>
+            </div>{" "}
+          </>
+        )}
       </div>
     </div>,
     document.querySelector("body")

@@ -211,7 +211,7 @@ const RoomDetail = () => {
             <div className="h-full w-[35%]">
               <div className="flex flex-col gap-3 px-5 py-5 rounded-xl shadow-lg relative">
                 <div className="absolute top-5 right-2">
-                  <Rating readonly={true} rating={roomDetail.rating} />
+                  <Rating readonly={true} rating={roomDetail?.rating} />
                 </div>
                 <h1 className="text-4xl font-bold">{roomDetail?.name}</h1>
                 <div className="flex flex-col gap-2 mt-5">

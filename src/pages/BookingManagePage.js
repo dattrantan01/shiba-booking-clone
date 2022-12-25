@@ -4,6 +4,7 @@ import RentBooking from "../components/rent/RentBooking";
 import http from "../config/axiosConfig";
 import Loading from "../components/loading/Loading";
 import { toast } from "react-toastify";
+import ModalLoading from "../components/loading/ModalLoading";
 
 const BookingManagePage = () => {
   const params = useParams();
@@ -32,6 +33,7 @@ const BookingManagePage = () => {
   }, [status]);
 
   const handlePayment = (id) => {
+    setIsLoadingButton(true);
     http
       .post(`booking/payment`, {
         bookingId: id,
@@ -55,12 +57,16 @@ const BookingManagePage = () => {
         shippingBillType: 1,
       })
       .then((res) => {
+        setIsLoadingButton(false);
         window.location.replace(res.data.response);
         console.log(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoadingButton(false);
+      });
   };
   const handleDuePayment = (id) => {
+    setIsLoadingButton(true);
     http
       .post(`booking/payment`, {
         bookingId: id,
@@ -84,12 +90,16 @@ const BookingManagePage = () => {
         shippingBillType: 1,
       })
       .then((res) => {
+        setIsLoadingButton(false);
         window.location.replace(res.data);
         console.log(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoadingButton(false);
+      });
   };
   const handleExtendDue = (id, months) => {
+    setIsLoadingButton(true);
     http
       .put(`booking/bookings/${id}/extend`, {
         monthNumber: months,
@@ -119,34 +129,45 @@ const BookingManagePage = () => {
           })
           .then((res) => {
             window.location.replace(res.data);
+            setIsLoadingButton(false);
             console.log(res);
           })
           .catch((err) => {
+            setIsLoadingButton(false);
             toast.error(err);
           });
       });
   };
   const handleDoneExtendDue = (id) => {
+    setIsLoadingButton(true);
     http
       .put(`booking/bookings/${id}/done`)
       .then((res) => {
+        setIsLoadingButton(false);
         toast.success(res);
       })
       .catch((err) => {
+        setIsLoadingButton(false);
         console.error(err);
       });
   };
   const handleDonePendingBooking = (id) => {
+    setIsLoadingButton(true);
     http
       .put(`booking/bookings/${id}/reject`)
       .then((res) => {
         toast.success("success");
+        setIsLoadingButton(false);
         getBookings();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsLoadingButton(false);
+      });
   };
   return (
     <div className="px-5 pt-5 w-full">
+      {isLoadingButton && <ModalLoading />}
       {isLoading ? (
         // <div className="w-9 h-9 border-8 rounded-full border-t-transparent animate-spin border-slate-400 mx-auto"></div>
         <Loading></Loading>
