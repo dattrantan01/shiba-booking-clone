@@ -133,7 +133,7 @@ const RentModal = ({
         </div>
         <div className="w-full mt-auto flex items-center justify-center">
           <Button onClick={handleRent} isLoading={isLoading}>
-            Rent Now
+            Payment
           </Button>
         </div>
       </div>

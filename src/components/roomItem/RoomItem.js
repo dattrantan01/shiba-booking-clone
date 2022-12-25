@@ -39,7 +39,7 @@ const RoomItem = ({
             className="px-3 py-1 rounded-full text-white shadow-xl bg-primary"
             onClick={() => handleClick()}
           >
-            Rent now
+            Check now
           </button>
         </div>
       </div>
