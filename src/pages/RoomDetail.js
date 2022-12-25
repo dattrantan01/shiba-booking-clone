@@ -128,35 +128,37 @@ const RoomDetail = () => {
                 <h2 className="text-2xl font-bold text-primary mb-8">
                   Reviews
                 </h2>
-                <Rating handleRating={handleRating} rating={rating} />
                 {user.id && (
-                  <form
-                    onSubmit={handleAddReviews}
-                    className="relative w-full mb-5"
-                  >
-                    <input
-                      type="text"
-                      value={review}
-                      onChange={(e) => setReview(e.target.value)}
-                      className="outline-none py-2 pl-4 pr-[80px] w-full text-sm border-b-2 border-slate-200"
-                      placeholder="Write yout review..."
-                    />
-                    <label htmlFor="uploadImage" className="">
-                      <input
-                        id="uploadImage"
-                        type="file"
-                        className="hidden"
-                        onChange={handleUploadImage}
-                      />
-                      <MdOutlineAddAPhoto className="absolute bottom-3 right-10 cursor-pointer" />
-                    </label>
-                    <button
-                      type="submit"
-                      className="px-3 py-2 absolute bottom-1 right-1"
+                  <>
+                    <Rating handleRating={handleRating} rating={rating} />
+                    <form
+                      onSubmit={handleAddReviews}
+                      className="relative w-full mb-5"
                     >
-                      <BiRightArrow />
-                    </button>
-                  </form>
+                      <input
+                        type="text"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
+                        className="outline-none py-2 pl-4 pr-[80px] w-full text-sm border-b-2 border-slate-200"
+                        placeholder="Write yout review..."
+                      />
+                      <label htmlFor="uploadImage" className="">
+                        <input
+                          id="uploadImage"
+                          type="file"
+                          className="hidden"
+                          onChange={handleUploadImage}
+                        />
+                        <MdOutlineAddAPhoto className="absolute bottom-3 right-10 cursor-pointer" />
+                      </label>
+                      <button
+                        type="submit"
+                        className="px-3 py-2 absolute bottom-1 right-1"
+                      >
+                        <BiRightArrow />
+                      </button>
+                    </form>
+                  </>
                 )}
                 {file && imgUpload ? (
                   <div className="image upload w-full h-[110px] relative flex items-center justify-start bg-slate-100">
@@ -207,7 +209,10 @@ const RoomDetail = () => {
               </div>
             </div>
             <div className="h-full w-[35%]">
-              <div className="flex flex-col gap-3 px-5 py-5 rounded-xl shadow-lg">
+              <div className="flex flex-col gap-3 px-5 py-5 rounded-xl shadow-lg relative">
+                <div className="absolute top-5 right-2">
+                  <Rating readonly={true} rating={roomDetail.rating} />
+                </div>
                 <h1 className="text-4xl font-bold">{roomDetail?.name}</h1>
                 <div className="flex flex-col gap-2 mt-5">
                   <div>

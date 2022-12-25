@@ -109,6 +109,7 @@ const LocationDetailPage = () => {
                   roomName={room.name}
                   capacity={room.capacity}
                   price={room.price}
+                  rating={room.rating}
                 />
               );
             })}

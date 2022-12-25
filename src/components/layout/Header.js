@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { AiOutlineLogout } from "react-icons/ai";
+
+import Notification from "../noti/Notification";
 const items = [
   {
     url: "/",
@@ -20,6 +22,7 @@ const items = [
 const Header = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+
   const handleSignOut = () => {
     localStorage.removeItem("token");
     setUser({
@@ -50,6 +53,7 @@ const Header = () => {
       <div>
         {user.id ? (
           <div className="flex flex-row gap-2 items-center">
+            <Notification />
             <span>{user.fullName}</span>
             <div className="w-12 h-12">
               <img

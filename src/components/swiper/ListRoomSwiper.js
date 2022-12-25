@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import http from "../../config/axiosConfig";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
-import RoomItem from "../roomItem/RoomItem";
+
 import RoomSwiper from "./RoomSwiper";
 
 const ListRoomSwiper = () => {
   const [listRoom, setListRoom] = useState([]);
-  http.get(`booking/rooms/top-7`).then((res) => {
-    setListRoom(res.data);
-  });
-  console.log("listRoom", listRoom);
+  useEffect(() => {
+    http.get(`booking/rooms/top-7`).then((res) => {
+      setListRoom(res.data);
+    });
+  }, []);
+
   return (
     <div className="movie-list">
       <Swiper spaceBetween={20} slidesPerView={3.5}>
@@ -31,6 +33,7 @@ const ListRoomSwiper = () => {
                   roomName={room.name}
                   capacity={room.capacity}
                   price={room.price}
+                  rating={room.rating}
                 />
               </SwiperSlide>
             );

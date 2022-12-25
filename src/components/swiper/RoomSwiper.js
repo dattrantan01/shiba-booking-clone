@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Rating from "../rating/Rating";
 
 const RoomSwiper = ({
   url,
@@ -8,6 +9,7 @@ const RoomSwiper = ({
   capacity,
   price,
   id,
+  rating,
   locationId,
 }) => {
   const navigate = useNavigate();
@@ -24,9 +26,12 @@ const RoomSwiper = ({
         </div>
       </div>
       <div className="flex w-full h-[100px] flex-col px-1 py-1">
-        <h1 className="name text-xl font-medium text-ellipsis line-clamp-2 overflow-hidden ">
-          {roomName}
-        </h1>
+        <div className="w-full flex flex-row justify-between">
+          <h1 className="name text-xl font-medium text-ellipsis line-clamp-2 overflow-hidden ">
+            {roomName}
+          </h1>
+          <Rating readonly={true} rating={rating} />
+        </div>
         <p className="address text-sm font-medium text-slate-600">
           <span>Capacity: </span>
           {capacity}
