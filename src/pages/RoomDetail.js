@@ -11,6 +11,7 @@ import useUploadImage from "../hooks/useUploadImage";
 import { AiOutlineClose } from "react-icons/ai";
 import Rating from "../components/rating/Rating";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 const RoomDetail = () => {
   const params = useParams();
@@ -224,7 +225,7 @@ const RoomDetail = () => {
                       Available from:{" "}
                     </span>
                     <span className="text-xl">
-                      {roomDetail?.availableDay?.slice(0, 10)}
+                      {moment(roomDetail?.availableDay).format("DD-MM-YYYY")}
                     </span>
                   </div>
 

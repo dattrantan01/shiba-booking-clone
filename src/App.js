@@ -6,7 +6,6 @@ import { SearchProvider } from "./context/search-context";
 import BookingManagePage from "./pages/BookingManagePage";
 import LocationDetailPage from "./pages/LocationDetailPage";
 import LocationPage from "./pages/LocationPage";
-import Profile from "./pages/Profile";
 import RoomDetail from "./pages/RoomDetail";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/auth-context";

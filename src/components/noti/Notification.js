@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoNotifications } from "react-icons/io5";
 import http from "../../config/axiosConfig";
 import RentBookingModal from "../rent/RentBookingModal";
+import moment from "moment";
 
 const Notification = () => {
   const [showModalDetailBooking, setShowModalDetailBooking] = useState(false);
@@ -11,7 +12,6 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     http.get(`booking/bookings/noti`).then((res) => {
-      console.log("noti", res.data);
       setNotifications(res.data);
       const countNoti = res.data?.reduce((accumulator, item) => {
         let read = 0;
@@ -23,7 +23,6 @@ const Notification = () => {
   }, [showList]);
   useEffect(() => {
     http.get(`booking/bookings/noti`).then((res) => {
-      console.log("noti", res.data);
       setNotifications(res.data);
       const countNoti = res.data?.reduce((accumulator, item) => {
         let read = 0;
@@ -86,7 +85,7 @@ const Notification = () => {
                   <span className="font-bold">{item.username} </span>
                   <span className="font-medium">{item.message}</span>
                   <div className="font-semibold text-slate-400 text-xs flex flex-row gap-1 items-center mt-1">
-                    {item.createOn?.slice(0, 10)}
+                    {moment(item.createOn).format("DD-MM-YYYY")}
                   </div>
                 </div>
               </div>

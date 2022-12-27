@@ -74,7 +74,6 @@ const RegisterPage = () => {
     http
       .post("v1/client/sign-up", user)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("token", res.data.token);
       })
       .then(() => {

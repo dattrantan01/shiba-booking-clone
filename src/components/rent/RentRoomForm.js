@@ -19,11 +19,17 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
     http
       .get(`booking/locations/${locationId}/utilities`)
       .then((res) => {
-        console.log("utilities", res.data);
         let listUti = res.data;
         listUti = listUti.map((item) => {
+          const priceInt = +item.price
+            .split("")
+            .filter((digit) => digit !== ".")
+            .join("");
           return {
-            value: item,
+            value: {
+              ...item,
+              priceInt: priceInt,
+            },
             checked: false,
           };
         });
@@ -64,7 +70,7 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
       monthNumber: monthRent,
       utilities: utilitiesClient,
     };
-    console.log(booking);
+
     setShowModalRent(true);
   };
   const monthRentNumber = (e) => {
@@ -98,7 +104,7 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
           <DatePicker
             onChange={(date) => setDate(date)}
             value={date}
-            dateFormat="YYYY-MM-DD"
+            dateFormat="DD/MM/YYYY"
             timeFormat={false}
             className="datePicker"
             isValidDate={disableDate}

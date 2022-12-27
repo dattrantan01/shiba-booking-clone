@@ -51,7 +51,6 @@ export default function useUploadImage() {
         }
       )
       .then((res) => {
-        console.log(res);
         setImgUpload(res?.data.imgId);
         setFile(res?.data.imgUrl);
         setIsLoadingImage(false);

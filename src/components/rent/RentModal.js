@@ -32,23 +32,29 @@ const RentModal = ({
   utilities.forEach((utility) => {
     if (utility.checked === true) utilitiesClient.push(utility.value);
   });
+  const startDateShow = moment(startDate).format("DD-MM-YYYY").toString();
   const endDate = moment(startDate)
     .add(monthRent, "months")
-    .toISOString()
-    .slice(0, 10);
+    .format("DD-MM-YYYY")
+    .toString();
   const handleRent = () => {
     setIsLoading(true);
+    const utitlitiesPriceInt = utilitiesClient.map((item) => {
+      return {
+        ...item,
+        price: item.priceInt,
+      };
+    });
     const booking = {
       roomId: roomDetail.id,
       startDay: startDate.toISOString(),
       monthNumber: monthRent,
-      utilities: utilitiesClient,
+      utilities: utitlitiesPriceInt,
     };
-    console.log(booking);
+
     http
       .post(`booking/bookings`, booking)
       .then((res) => {
-        console.log("booking", res);
         toast.success("Booking success");
         setIsLoading(false);
         navigate("/booking/1");
@@ -103,7 +109,7 @@ const RentModal = ({
             <div className="flex flex-row gap-2 items-center">
               <MdCalendarToday />
               <span className="font-semibold">Start Date:</span>
-              <span>{startDate.toISOString().slice(0, 10)}</span>
+              <span>{startDateShow}</span>
             </div>
           </div>
           <div>

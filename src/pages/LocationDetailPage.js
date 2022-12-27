@@ -6,6 +6,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { IoMdPricetag } from "react-icons/io";
 import ModalLoading from "../components/loading/ModalLoading";
 import { set } from "react-hook-form";
+import moment from "moment";
 
 const LocationDetailPage = () => {
   const params = useParams();
@@ -19,7 +20,6 @@ const LocationDetailPage = () => {
     http
       .get(`booking/locations/${id}`)
       .then((res) => {
-        console.log(res.data);
         setLocationDetail(res.data);
         setIsLoading(false);
       })
@@ -32,7 +32,6 @@ const LocationDetailPage = () => {
     http
       .post(`booking/locations/${id}/rooms/all`, {})
       .then((res) => {
-        console.log(res.data);
         setRooms(res.data.response);
         setIsLoading(false);
       })
@@ -40,7 +39,7 @@ const LocationDetailPage = () => {
         setIsLoading(false);
       });
   };
-  console.log("loading", isLoading);
+
   const getData = async () => {
     await getDetailRoom();
     await getListRoom();
@@ -98,7 +97,9 @@ const LocationDetailPage = () => {
           </div>
           <div className="w-full grid grid-cols-4 gap-1 gap-y-3 mt-5">
             {rooms.map((room) => {
-              const availableDate = room.availableDay?.slice(0, 10);
+              const availableDate = moment(room.availableDay).format(
+                "DD-MM-YYYY"
+              );
               return (
                 <RoomItem
                   key={room.id}

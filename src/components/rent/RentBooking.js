@@ -7,7 +7,6 @@ import {
   MdPeople,
   MdCalendarToday,
   MdFormatListBulleted,
-  MdOutlineCheckCircleOutline,
 } from "react-icons/md";
 import { IoMdPricetag } from "react-icons/io";
 import ExtendPayment from "./ExtendPayment";
@@ -30,10 +29,12 @@ const RentBooking = ({
   handleDonePendingBooking,
 }) => {
   const [showExtend, setShowExtend] = useState(false);
+
+  const startDateShow = moment(startDate).format("DD-MM-YYYY");
   const endDate = moment(startDate)
     .add(monthRent, "months")
-    .toISOString()
-    .slice(0, 10);
+    .format("DD-MM-YYYY")
+    .toString();
   return (
     <div className="relative z-10 rounded-lg w-full bg-slate-100 px-5 py-5 flex flex-col">
       <h2 className="font-bold text-3xl text-center text-primary">#{id}</h2>
@@ -74,7 +75,7 @@ const RentBooking = ({
                 <div className="flex flex-row gap-2 items-center">
                   <MdCalendarToday />
                   <span className="font-semibold">Start Date:</span>
-                  <span>{startDate.slice(0, 10)}</span>
+                  <span>{startDateShow}</span>
                 </div>
               </div>
               <div>
@@ -112,7 +113,10 @@ const RentBooking = ({
               <div className="mt-3 ml-5 flex flex-row gap-5 text-base">
                 {utilities.map((item) => {
                   return (
-                    <div className="flex flex-row gap-1 items-center">
+                    <div
+                      key={item.id}
+                      className="flex flex-row gap-1 items-center"
+                    >
                       <IoMdPricetag />
                       <span>{item.name}:</span>
                       <span>{item.price} VND</span>
@@ -125,7 +129,7 @@ const RentBooking = ({
         </div>
         {status === "Pending" && (
           <div className="w-full mt-5 mx-auto max-w-[200px] ">
-            <Button onClick={() => handleDonePendingBooking(id)}>Done</Button>
+            <Button onClick={() => handleDonePendingBooking(id)}>Reject</Button>
           </div>
         )}
         {status === "Approved" && (

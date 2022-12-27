@@ -10,7 +10,7 @@ const LocationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { search } = useSearch();
   const navigate = useNavigate();
-  console.log(search);
+
   useEffect(() => {
     setIsLoading(true);
     const city = search.cityId;
@@ -27,13 +27,12 @@ const LocationPage = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.error(err);
         setIsLoading(false);
       });
   }, [search.cityId, search.districtId, search.wardId]);
   const handleSearch = (values) => {
     setIsLoading(true);
-    console.log(values.minPrice, values.maxPrice);
+
     const city = search.cityId;
     const district = search.districtId;
     const ward = search.wardId;
@@ -57,7 +56,7 @@ const LocationPage = () => {
   const handleClickLocation = (locationId) => {
     navigate(`/location-detail/${locationId}`);
   };
-  console.log("loading", isLoading);
+
   return (
     <div className="mt-[80px] flex flex-row w-full relative">
       <div className="px-8 py-5 bg-opacity-20  w-[25%] shadow-lg h-[720px] sticky top-0 border border-slate-100">

@@ -34,7 +34,7 @@ const Rating = ({
           return (
             <svg
               key={index}
-              ariaHidden="true"
+              aria-hidden="true"
               className={`w-5 h-5 cursor-pointer ${getColor(index)}`}
               onClick={() => handleRating(index)}
               onMouseEnter={() => handleMouseEnter(index)}

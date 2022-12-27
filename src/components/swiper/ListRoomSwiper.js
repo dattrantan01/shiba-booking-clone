@@ -4,6 +4,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
 
 import RoomSwiper from "./RoomSwiper";
+import moment from "moment";
 
 const ListRoomSwiper = () => {
   const [listRoom, setListRoom] = useState([]);
@@ -18,7 +19,9 @@ const ListRoomSwiper = () => {
       <Swiper spaceBetween={20} slidesPerView={3.5}>
         {listRoom.length > 0 &&
           listRoom.map((room, index) => {
-            const availableDate = room.availableDay?.slice(0, 10);
+            const availableDate = moment(room.availableDay).format(
+              "DD-MM-YYYY"
+            );
             return (
               <SwiperSlide key={index}>
                 <RoomSwiper

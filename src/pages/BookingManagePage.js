@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RentBooking from "../components/rent/RentBooking";
 import http from "../config/axiosConfig";
 import Loading from "../components/loading/Loading";
@@ -12,14 +12,12 @@ const BookingManagePage = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
-  const navigate = useNavigate();
 
   const getBookings = () => {
     setIsLoading(true);
     http
       .get(`booking/bookings/current-user?status=${status}`)
       .then((res) => {
-        console.log(res);
         setBookings(res.data);
         setIsLoading(false);
       })
@@ -59,7 +57,6 @@ const BookingManagePage = () => {
       .then((res) => {
         setIsLoadingButton(false);
         window.location.replace(res.data.response);
-        console.log(res);
       })
       .catch((err) => {
         setIsLoadingButton(false);
@@ -92,7 +89,6 @@ const BookingManagePage = () => {
       .then((res) => {
         setIsLoadingButton(false);
         window.location.replace(res.data);
-        console.log(res);
       })
       .catch((err) => {
         setIsLoadingButton(false);
@@ -130,7 +126,6 @@ const BookingManagePage = () => {
           .then((res) => {
             window.location.replace(res.data);
             setIsLoadingButton(false);
-            console.log(res);
           })
           .catch((err) => {
             setIsLoadingButton(false);

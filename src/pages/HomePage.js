@@ -9,7 +9,7 @@ import ListRoomSwiper from "../components/swiper/ListRoomSwiper";
 const HomePage = () => {
   const navigate = useNavigate();
   const { search } = useSearch();
-  console.log(search);
+
   const handleSearch = (values) => {
     navigate(`location`);
   };
