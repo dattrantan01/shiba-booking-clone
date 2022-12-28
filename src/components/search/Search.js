@@ -153,7 +153,7 @@ const Search = ({ handleSearch, col = false }) => {
       </Field>
       {col && (
         <div className="w-full">
-          <Label>Price</Label>
+          <Label>{`Price (VND)`}</Label>
           <div className="flex flex-row gap-5 mt-3">
             <input
               type="number"
