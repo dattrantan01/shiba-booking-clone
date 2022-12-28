@@ -196,7 +196,7 @@ const BookingManagePage = () => {
             })
           ) : (
             <div className="w-[500px] h-[500px] mx-auto">
-              <img src="/empty.svg" alt="" className="w-full h-full" />
+              <img src="empty.svg" alt="" className="w-full h-full" />
             </div>
           )}
         </div>
