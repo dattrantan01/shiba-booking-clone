@@ -80,7 +80,10 @@ const RentRoomForm = ({ locationId, roomId, roomDetail }) => {
   const disableDate = (current, selectedDate) => {
     if (!roomDetail.availableDay) return;
     let availableDate = new Date(roomDetail.availableDay);
-    if (availableDate > new Date(current)) return false;
+    let currentDate = new Date();
+    const disableDate =
+      currentDate > availableDate ? currentDate : availableDate;
+    if (disableDate > new Date(current)) return false;
     return true;
   };
   return (

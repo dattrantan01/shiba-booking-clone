@@ -59,6 +59,7 @@ const BookingManagePage = () => {
         window.location.replace(res.data.response);
       })
       .catch((err) => {
+        toast.error(err.data?.message);
         setIsLoadingButton(false);
       });
   };
@@ -92,6 +93,7 @@ const BookingManagePage = () => {
       })
       .catch((err) => {
         setIsLoadingButton(false);
+        toast.error(err.data?.message);
       });
   };
   const handleExtendDue = (id, months) => {
@@ -129,7 +131,7 @@ const BookingManagePage = () => {
           })
           .catch((err) => {
             setIsLoadingButton(false);
-            toast.error(err);
+            toast.error(err.data?.message);
           });
       });
   };
@@ -143,6 +145,7 @@ const BookingManagePage = () => {
       })
       .catch((err) => {
         setIsLoadingButton(false);
+        toast.error(err.data?.message);
         console.error(err);
       });
   };
@@ -156,7 +159,7 @@ const BookingManagePage = () => {
         getBookings();
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.data?.message);
         setIsLoadingButton(false);
       });
   };
@@ -168,28 +171,34 @@ const BookingManagePage = () => {
         <Loading></Loading>
       ) : (
         <div className="grid grid-cols-1  gap-6 w-full">
-          {bookings.map((item) => {
-            return (
-              <RentBooking
-                key={item.id}
-                id={item.id}
-                roomName={item.roomName}
-                userName={item.userName}
-                startDate={item.startDay}
-                monthRent={item.monthNumber}
-                status={item.status}
-                utilities={item.utilities}
-                handlePayment={handlePayment}
-                handleDuePayment={handleDuePayment}
-                handleExtendDue={handleExtendDue}
-                handleDoneExtendDue={handleDoneExtendDue}
-                imgUrl={item.imgUrl}
-                isLoadingButton={isLoadingButton}
-                handleDonePendingBooking={handleDonePendingBooking}
-                overDueDay={item.overDueDay}
-              ></RentBooking>
-            );
-          })}
+          {bookings.length > 0 ? (
+            bookings.map((item) => {
+              return (
+                <RentBooking
+                  key={item.id}
+                  id={item.id}
+                  roomName={item.roomName}
+                  userName={item.userName}
+                  startDate={item.startDay}
+                  monthRent={item.monthNumber}
+                  status={item.status}
+                  utilities={item.utilities}
+                  handlePayment={handlePayment}
+                  handleDuePayment={handleDuePayment}
+                  handleExtendDue={handleExtendDue}
+                  handleDoneExtendDue={handleDoneExtendDue}
+                  imgUrl={item.imgUrl}
+                  isLoadingButton={isLoadingButton}
+                  handleDonePendingBooking={handleDonePendingBooking}
+                  overDueDay={item.overDueDay}
+                ></RentBooking>
+              );
+            })
+          ) : (
+            <div className="w-[500px] h-[500px] mx-auto">
+              <img src="/empty.svg" alt="" className="w-full h-full" />
+            </div>
+          )}
         </div>
       )}
     </div>

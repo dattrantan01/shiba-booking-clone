@@ -65,32 +65,38 @@ const Notification = () => {
       )}
       {showList && (
         <div className="w-[400px] max-h-[500px] overflow-y-auto pt-3 relative shadow rounded-xl px-1 z-40 bg-slate-200 opacity-100 -translate-x-3/4 translate-y-3  flex flex-col gap-1">
-          {notifications.map((item) => {
-            return (
-              <div
-                key={item.id}
-                onClick={() => handleClickNoti(item)}
-                className={`w-full flex flex-row gap-3 ${
-                  item.isRead ? "bg-slate-200" : "rounded-xl bg-white"
-                }  py-2 px-2`}
-              >
-                <div className="w-[70px] h-[70px]">
-                  <img
-                    src="/notification.svg"
-                    alt=""
-                    className="w-full h-full"
-                  />
-                </div>
-                <div className="h-full w-[calc(100%-70px)] text-sm">
-                  <span className="font-bold">{item.username} </span>
-                  <span className="font-medium">{item.message}</span>
-                  <div className="font-semibold text-slate-400 text-xs flex flex-row gap-1 items-center mt-1">
-                    {moment(item.createOn).format("DD-MM-YYYY")}
+          {notifications.length > 0 ? (
+            notifications.map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => handleClickNoti(item)}
+                  className={`w-full flex flex-row gap-3 ${
+                    item.isRead ? "bg-slate-200" : "rounded-xl bg-white"
+                  }  py-2 px-2`}
+                >
+                  <div className="w-[70px] h-[70px]">
+                    <img
+                      src="/notification.svg"
+                      alt=""
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <div className="h-full w-[calc(100%-70px)] text-sm">
+                    <span className="font-bold">{item.username} </span>
+                    <span className="font-medium">{item.message}</span>
+                    <div className="font-semibold text-slate-400 text-xs flex flex-row gap-1 items-center mt-1">
+                      {moment(item.createOn).format("DD-MM-YYYY")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="w-[200px] h-[200px] mx-auto">
+              <img src="/empty_noti.svg" alt="" className="w-full h-full" />
+            </div>
+          )}
         </div>
       )}
     </div>
