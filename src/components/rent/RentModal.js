@@ -47,11 +47,11 @@ const RentModal = ({
     });
     const booking = {
       roomId: roomDetail.id,
-      startDay: startDate.toISOString(),
+      startDay: new Date(startDate).toLocaleDateString(),
       monthNumber: monthRent,
       utilities: utitlitiesPriceInt,
     };
-
+    console.log(booking);
     http
       .post(`booking/bookings`, booking)
       .then((res) => {
@@ -139,7 +139,7 @@ const RentModal = ({
         </div>
         <div className="w-full mt-auto flex items-center justify-center">
           <Button onClick={handleRent} isLoading={isLoading}>
-            Payment
+            Create
           </Button>
         </div>
       </div>
